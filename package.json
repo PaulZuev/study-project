@@ -1,0 +1,23 @@
+{
+  "name": "study-project",
+  "version": "1.0.0",
+  "private": true,
+  "description": "study-project",
+  "author": "PaulZuev",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^4.9.2",
+    "gatsby-plugin-sitemap": "^5.9.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
