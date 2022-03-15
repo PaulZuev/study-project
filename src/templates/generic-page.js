@@ -12,13 +12,16 @@ const GenericPage = props => {
         articleText
         articleTitle
       }
+      slug
+      title
+      originalId
     }
   }
   `)
   return (
     <main>
       <div className='md:container md:mx-auto'>
-        <h1 className='text-7xl font-bold mb-5'>{props.data.datoCmsHomepage.title}</h1>
+        <h1 className='text-7xl font-bold mb-5'>{result.datoCmsHomepage.title}</h1>
         {result.datoCmsHomepage.featuredArticles.map(featuredArticles => (
           <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={featuredArticles.originalId}>
             <div className="md:flex">
@@ -38,14 +41,6 @@ const GenericPage = props => {
   )
 }
 
-export const query = graphql `
-query PageQuery($pageId: String ){
-  datoCmsHomepage(originalId: {eq: $pageId}) {
-    slug
-    title
-    originalId
-  }
-}
-`
+
 
 export default GenericPage
