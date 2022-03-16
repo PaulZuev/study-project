@@ -15,6 +15,9 @@ const GenericPage = props => {
           articleTitle
           originalId
           slug
+          articlePicture {
+            url
+          }
         }
       }
     }
@@ -32,6 +35,9 @@ const GenericPage = props => {
         slug
         meta {
           publishedAt(formatString: "YYYY.DD.MM")
+        }
+        articlePicture {
+          url
         }
       }
     }
@@ -54,12 +60,12 @@ const GenericPage = props => {
                 <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={featuredArticles.originalId}>
                   <div className="">
                     <div className="md:shrink-0">
-                      <img className="h-48 w-full object-cover md:h-40 md:w-full" src="https://images.unsplash.com/photo-1637734433731-621aca1c8cb6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=404&q=80" alt="Man looking at item at a store"/>
+                      <img className="h-48 w-full object-cover md:h-40 md:w-full" src={featuredArticles.articlePicture.url} alt="Man looking at item at a store"/>
                     </div>
                     <div className="p-8">
                       <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{featuredArticles.articleTitle}</div>
                       <p className="mt-2 text-slate-500">{featuredArticles.articleShortText}</p>
-                      <a href="#" className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</a>
+                      <a href={`/blog/${featuredArticles.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</a>
                     </div>
                   </div>
                 </div>
@@ -73,17 +79,17 @@ const GenericPage = props => {
             </h2>
           </div>
           <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
-            {result.allDatoCmsArticle.nodes.map(featuredArticles => (
-              <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={featuredArticles.originalId}>
+            {result.allDatoCmsArticle.nodes.map(allPost => (
+              <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={allPost.originalId}>
                 <div className="">
                   <div className="md:shrink-0">
-                    <img className="h-48 w-full object-cover md:h-40 md:w-full" src="https://images.unsplash.com/photo-1637734433731-621aca1c8cb6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=404&q=80" alt="Man looking at item at a store"/>
+                    <img className="h-48 w-full object-cover md:h-40 md:w-full" src={allPost.articlePicture.url} alt="Man looking at item at a store"/>
                   </div>
                   <div className="p-8">
-                    <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{featuredArticles.articleTitle}</div>
-                    <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{featuredArticles.meta.publishedAt}</div>
-                    <p className="mt-2 text-slate-500">{featuredArticles.articleShortText}</p>
-                    <a href="#" className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</a>
+                    <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{allPost.articleTitle}</div>
+                    <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{allPost.meta.publishedAt}</div>
+                    <p className="mt-2 text-slate-500">{allPost.articleShortText}</p>
+                    <a href={`/blog/${allPost.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</a>
                   </div>
                 </div>
               </div>
