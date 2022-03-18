@@ -2,18 +2,22 @@ import React from "react"
 import { graphql } from "gatsby"
 import { Link } from "gatsby"
  
+const style = {
+  prevButton : 'relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50',
+  nextButton : 'relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'
+};
+
 const GenericPage = ({ data, pageContext }) => {
-  console.log(pageContext);
   const posts = data.allDatoCmsArticle.edges;
   const feauter = data.datoCmsHomepage.featuredArticles
   const { currentPage, numPages } = pageContext;
   const isFirst = currentPage === 1;
   const isLast = currentPage === numPages;
-  console.log(isLast);
   const prevPagePath = currentPage - 1 === 1 ? `${"/"}` : `${"/"}` + (currentPage - 1).toString();
   const nextPagePath = '/' + (currentPage + 1).toString();
-  const prevPageClassName = isFirst ? "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 pointer-events-none" : "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50";
-  const nextPageClassName = isLast ? "relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 pointer-events-none" : "relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50";
+  const prevPageClassName = isFirst ? (style.prevButton + " pointer-events-none") : style.prevButton ;
+  const nextPageClassName = isLast ? (style.nextButton + " pointer-events-none") : style.nextButton;
+  console.log(prevPageClassName);
   const getPageNumberPath = (currentIndex) => {
     if (currentIndex === 0){
       return `${"/"}`;

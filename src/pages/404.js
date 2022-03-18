@@ -45,7 +45,7 @@ const NotFoundPage = () => {
           </>
         ) : null}
         <br />
-        <Link to="/">Go home</Link>.
+        <Link to="/" className="absolute bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-yellow-500 ... top-10 left-20 inline-flex items-center justify-center px-2 py-1 border-none border-transparent text-base font-medium rounded-md text-white">Go home</Link>.
       </p>
     </main>
   )
