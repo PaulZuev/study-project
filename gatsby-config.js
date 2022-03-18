@@ -8,7 +8,7 @@ module.exports = {
     siteUrl: `https://www.yourdomain.tld`
   },
   plugins: [
-    "gatsby-plugin-sitemap",
+    `gatsby-plugin-advanced-sitemap`,
     'gatsby-plugin-image',
     'gatsby-plugin-postcss',
     {
