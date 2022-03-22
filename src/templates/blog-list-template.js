@@ -17,6 +17,7 @@ const GenericPage = ({ data, pageContext }) => {
   const nextPagePath = '/' + (currentPage + 1).toString();
   const prevPageClassName = isFirst ? (style.prevButton + " pointer-events-none") : style.prevButton ;
   const nextPageClassName = isLast ? (style.nextButton + " pointer-events-none") : style.nextButton;
+  const allFilter = data.allDatoCmsFilter.nodes
   console.log(prevPageClassName);
   const getPageNumberPath = (currentIndex) => {
     if (currentIndex === 0){
@@ -27,7 +28,26 @@ const GenericPage = ({ data, pageContext }) => {
   return (
     <main>
       <div className='md:container md:mx-auto'>
-        <h1 className='mt-2 mb-12 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl'>{feauter.title}</h1>
+      <header className="main-header"><Link to={'/'} className="text-gray-700 block pb-6 text-5xl font-extrabold" role="menuitem">{data.datoCmsHomepage.title}</Link></header>
+        <div className="relative inline-block text-left">
+          <div>
+            <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+           Filter tags
+              <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+          <div className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+            <div className="py-1" role="none">
+            {allFilter.map(menu => {
+              return(
+               <Link to={`/filter/${menu.slug}`} className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0" key={menu.originalId}>{menu.title}</Link>
+              )
+            })}
+            </div>
+          </div>
+        </div>
         {feauter.map( items => (
         <section className='mb-10' key={items.id}>
           <div className='md:container md:mx-auto'>
@@ -45,7 +65,17 @@ const GenericPage = ({ data, pageContext }) => {
                     <div className="p-8">
                       <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{featuredArticles.articleTitle}</div>
                       <p className="mt-2 text-slate-500">{featuredArticles.articleShortText}</p>
-                      <Link to={`/blog/${featuredArticles.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</Link>
+                      <div className="flex justify-between">
+                        <Link to={`/blog/${featuredArticles.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</Link>
+                          <div className="group-button">
+                            { featuredArticles.tag.map((tags, id) =>{
+                              return (
+                                <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className=" m-1 mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-sky-500/100 hover:bg-sky-500/50">{tags.title}</Link>
+                                )
+                              })
+                            }  
+                          </div>
+                      </div> 
                     </div>
                   </div>
                 </div>
@@ -70,7 +100,17 @@ const GenericPage = ({ data, pageContext }) => {
                   <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{node.articleTitle}</div>
                   <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{node.meta.publishedAt}</div>
                   <p className="mt-2 text-slate-500">{node.articleShortText}</p>
-                  <Link to={`/blog/${node.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</Link>
+                  <div className="flex justify-between">
+                    <Link to={`/blog/${node.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</Link>
+                      <div className="group-button">
+                        { node.tag.map((tags, id) =>{
+                          return (
+                            <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className=" m-1 mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-sky-500/100 hover:bg-sky-500/50">{tags.title}</Link>
+                            )
+                          })
+                        }  
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -127,6 +167,13 @@ const GenericPage = ({ data, pageContext }) => {
 }
 export const blogListQuery = graphql`
   query BlogPageQuery ($skip: Int!, $limit: Int!){
+    allDatoCmsFilter {
+      nodes {
+        slug
+        title
+        originalId
+      }
+    }
     datoCmsHomepage{
       featuredArticles {
       ... on DatoCmsSection {
@@ -140,6 +187,11 @@ export const blogListQuery = graphql`
           slug
           articlePicture {
             url
+          }
+          tag {
+            slug
+            title
+            originalId
           }
         }
       }
@@ -162,6 +214,11 @@ export const blogListQuery = graphql`
           }
           articlePicture {
             url
+          }
+          tag {
+            slug
+            title
+            originalId
           }
         }
       }

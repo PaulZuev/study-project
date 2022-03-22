@@ -39,6 +39,13 @@ export const query = graphql `
       articlePicture {
         url
       }
+    },
+    allMarkdownRemark {
+      edges {
+        node {
+          excerpt(format: MARKDOWN)
+        }
+      }
     }
   }
 `;

@@ -5,12 +5,20 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
       title: `new`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://competent-stonebraker-cc433a.netlify.app/`
   },
   plugins: [
     `gatsby-plugin-advanced-sitemap`,
     'gatsby-plugin-image',
     'gatsby-plugin-postcss',
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        footnotes: true,
+        gfm: true,
+        plugins: [],
+      },
+    },
     {
       resolve: `gatsby-source-datocms`,
       options: {
