@@ -2,7 +2,9 @@ import * as React from "react";
 import { graphql, Link } from "gatsby";
 
 const blogPage = ({ data }) => {
-  console.log(data)
+  const markdownRemark = data.datoCmsArticle.articleTextNode.childMarkdownRemark // data.markdownRemark holds your post data
+  const { html } = markdownRemark
+  console.log(markdownRemark)
   return(
     <main>
       <div className="heading-post pb-10 pt-10 bg-gradient-to-r from-violet-500 to-fuchsia-500">
@@ -19,8 +21,8 @@ const blogPage = ({ data }) => {
             <img className="h-56 w-fauto object-cover sm:h-72 md:h-96 lg:w-50 lg:h-50" src={data.datoCmsArticle.articlePicture.url}/>
           </div>
           <div className="">
-            <p className="mt-3 p-20 text-base text-white sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-              {data.datoCmsArticle.articleText}
+            <p dangerouslySetInnerHTML={{ __html: html }} className="mt-3 p-20 text-base text-white sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+            
             </p>
           </div>
         </div>
@@ -39,13 +41,15 @@ export const query = graphql `
       articlePicture {
         url
       }
-    },
-    allMarkdownRemark {
-      edges {
-        node {
-          excerpt(format: MARKDOWN)
+      articleTextNode {
+        childMarkdownRemark {
+          html
+          timeToRead
         }
       }
+    },
+    markdownRemark(id: { eq: $id }) {
+      html
     }
   }
 `;
