@@ -49,7 +49,7 @@ exports.createPages = async ({ graphql, actions }) => {
   )
 
   const posts = result.data.allDatoCmsArticle.nodes
-  const postsPerPage = 3
+  const postsPerPage = 4
   const numPages = Math.ceil(posts.length / postsPerPage)
   Array.from({ length: numPages }).forEach((_, i) => {
     createPage({

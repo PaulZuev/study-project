@@ -14,7 +14,7 @@ const blogPage = ({ data }) => {
         <Link to={"/"} class="absolute bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-yellow-500 ... top-10 left-20 inline-flex items-center justify-center px-2 py-1 border-none border-transparent text-base font-medium rounded-md text-white">
             Back
           </Link>
-        <div className="md:container md:mx-auto pb-10 pt-10 ">
+        <div className="container mx-auto pb-10 pt-10 ">
           <div className="flex items-center justify-center mb-2">
             <img className="h-56 w-fauto object-cover sm:h-72 md:h-96 lg:w-50 lg:h-50" src={data.datoCmsArticle.articlePicture.url}/>
           </div>
