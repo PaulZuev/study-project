@@ -32,7 +32,7 @@ const GenericPage = ({ data, pageContext }) => {
     <main>
       <div className='container mx-auto'>
       <header className="main-header"><Link to={'/'} className="text-gray-700 block pb-6 text-5xl font-extrabold" role="menuitem">{data.datoCmsHomepage.title}</Link></header>
-        <div className="relative inline-block text-left" >
+        <div className="relative inline-block text-left mb-6" >
           <div>
               <button type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => (setIsSortMenuOpen(!isSortMenuOpen))}>
             Filter tags
@@ -40,7 +40,7 @@ const GenericPage = ({ data, pageContext }) => {
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </button>
-            <div className={`origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${isSortMenuOpen ? '' : 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+            <div className={`z-10 origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${isSortMenuOpen ? '' : 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
               <div className="py-1" role="none">
               {allFilter.map(menu => {
                 return(
@@ -59,26 +59,27 @@ const GenericPage = ({ data, pageContext }) => {
             </h2>
             <hr/>
           </div>
-          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
+          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8'>
               {items.featuredArticles.map(featuredArticles => (
-                <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={featuredArticles.originalId}>
-                  <div className="">
-                    <div className="md:shrink-0">
-                      <img className="h-48 w-full object-cover md:h-40 md:w-full" src={featuredArticles.articlePicture.url} />
+                <div className="max-w-md border-solid border-1 bg-white rounded-xl drop-shadow-xl overflow-hidden md:max-w-2xl" key={featuredArticles.originalId}>
+                  <div className="lg:flex p-4">
+                    <div className="shrink-0 relative">
+                      <img className="inline-block lg:h-32 lg:w-32 md:w-full rounded-lg ring-2 ring-white transition duration-0 ease-in-out hover:duration-150" src={featuredArticles.articlePicture.url} />
                     </div>
-                    <div className="p-8">
+                    <div className="px-6">
+                      <div className="group-button mb-3">
+                        Tags:
+                        { featuredArticles.tag.map((tags, id) =>{
+                          return (
+                            <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className="px-1 inline-flex items-center justify-center text-base font-medium rounded-md text-black  underline hover:decoration-2">{tags.title}</Link>
+                            )
+                          })
+                        }  
+                      </div> 
                       <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{featuredArticles.articleTitle}</div>
                       <p className="mt-2 text-slate-500">{featuredArticles.articleShortText}</p>
                       <div className="flex justify-between">
                         <Link to={`/blog/${featuredArticles.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</Link>
-                          <div className="group-button">
-                            { featuredArticles.tag.map((tags, id) =>{
-                              return (
-                                <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className=" m-1 mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-sky-500/100 hover:bg-sky-500/50">{tags.title}</Link>
-                                )
-                              })
-                            }  
-                          </div>
                       </div> 
                     </div>
                   </div>
@@ -93,13 +94,14 @@ const GenericPage = ({ data, pageContext }) => {
             </h2>
             <hr/>
           </div>
-          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
+          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-4'>
           {posts.map(({ node }) => {
             return (
               <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={node.slug}>
               <div className="">
-                <div className="md:shrink-0">
+                <div className="md:shrink-0 relative">
                   <img className="h-48 w-full object-cover md:h-40 md:w-full" src={node.articlePicture.url} alt="Man looking at item at a store"/>
+                  <div className="absolute bottom-2 left-5 tracking-wide text-sm text-white font-semibold">Date: {node.meta.publishedAt}</div>
                 </div>
                 <div className="p-6">
                   <div className="group-button mb-3">
@@ -116,7 +118,7 @@ const GenericPage = ({ data, pageContext }) => {
                   <div className="flex justify-between">
                     <Link to={`/blog/${node.slug}`} className=" mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Read more</Link>
                   </div>
-                  <div className="tracking-wide text-sm text-indigo-500 font-semibold">Date: {node.meta.publishedAt}</div>
+                  
                 </div>
               </div>
             </div>
@@ -193,6 +195,9 @@ export const blogListQuery = graphql`
           slug
           articlePicture {
             url
+          }
+          meta {
+            publishedAt(formatString: "YYYY.DD.MM")
           }
           tag {
             slug

@@ -21,7 +21,7 @@ const blogPage = ({ data }) => {
             <img className="h-56 w-fauto object-cover sm:h-72 md:h-96 lg:w-50 lg:h-50" src={data.datoCmsArticle.articlePicture.url}/>
           </div>
           <div className="">
-            <p dangerouslySetInnerHTML={{ __html: html }} className="mt-3 p-20 text-base text-white sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+            <p dangerouslySetInnerHTML={{ __html: html }} className="mt-3 p-20 text-base text-white">
             
             </p>
           </div>
