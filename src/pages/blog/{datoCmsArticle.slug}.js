@@ -1,10 +1,13 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 
+const style ={
+  back : "absolute bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-yellow-500 ... top-10 left-20 inline-flex items-center justify-center px-2 py-1 border-none border-transparent text-base font-medium rounded-md text-white",
+}
+
 const blogPage = ({ data }) => {
-  const markdownRemark = data.datoCmsArticle.articleTextNode.childMarkdownRemark // data.markdownRemark holds your post data
+  const markdownRemark = data.datoCmsArticle.articleTextNode.childMarkdownRemark
   const { html } = markdownRemark
-  console.log(markdownRemark)
   return(
     <main>
       <div className="heading-post pb-10 pt-10 bg-gradient-to-r from-violet-500 to-fuchsia-500">
@@ -13,7 +16,7 @@ const blogPage = ({ data }) => {
         </div>
       </div>
       <div className="body-post bg-gradient-to-r from-green-400 to-blue-500 relative">
-        <Link to={"/"} class="absolute bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-yellow-500 ... top-10 left-20 inline-flex items-center justify-center px-2 py-1 border-none border-transparent text-base font-medium rounded-md text-white">
+        <Link to={"/"} className={style.back}>
             Back
           </Link>
         <div className="container mx-auto pb-10 pt-10 ">
@@ -21,9 +24,7 @@ const blogPage = ({ data }) => {
             <img className="h-56 w-fauto object-cover sm:h-72 md:h-96 lg:w-50 lg:h-50" src={data.datoCmsArticle.articlePicture.url}/>
           </div>
           <div className="">
-            <p dangerouslySetInnerHTML={{ __html: html }} className="mt-3 p-20 text-base text-white">
-            
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: html }} className="mt-3 p-20 text-base text-white"></p>
           </div>
         </div>
       </div>
