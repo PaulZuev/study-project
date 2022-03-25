@@ -105,7 +105,7 @@ const GenericPage = ({ data, pageContext }) => {
                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                     <Link to={prevPagePath} className={prevPageClassName}>
                       <span className="sr-only">Previous</span>
-                      <ArrowLeft/>
+                      <ArrowLeft className="h-5 w-5"/>
                     </Link>
                     {Array.from({ length: numPages}, (_, i) => {
                         const pageNumberClassName = 'hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium';
@@ -117,7 +117,7 @@ const GenericPage = ({ data, pageContext }) => {
                     }
                     <Link to={nextPagePath} className={nextPageClassName}>
                       <span className="sr-only">Next</span>
-                      <ArrowRight/>
+                      <ArrowRight className="h-5 w-5" />
                     </Link>
                   </nav>
                 </div>
