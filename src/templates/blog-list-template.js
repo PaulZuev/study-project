@@ -6,12 +6,12 @@ import Filters from "../components/Filters/filters";
 import PostCard from "../components/PostCard/postCard";
 import ArrowRight from "../images/arrowRight.svg";
 import ArrowLeft from "../images/arrowLeft.svg";
+import Container from "../components/container";
+import Section from "../components/section";
 
 const style = {
-  prevButton : 'relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50',
-  nextButton : 'relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50',
-  link : "mt-3 inline-flex items-center justify-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700",
-  tags: "px-1 inline-flex items-center justify-center text-base font-medium rounded-md text-black  underline hover:decoration-2",
+  prevButton : 'arrow-button rounded-l-md',
+  nextButton : 'arrow-button rounded-r-md',
 };
 
 const GenericPage = ({ data, pageContext }) => {
@@ -29,57 +29,58 @@ const GenericPage = ({ data, pageContext }) => {
       currentIndex === 0 ? `${"/"}` : `${"/"}` + (currentIndex + 1)
     )
   }
-
   return (
     <main>
-      <div className='container mx-auto'>
-      <Header title={data.datoCmsHomepage.title}/>
-      <Filters allFilter={data.allDatoCmsFilter.nodes}/>
-      {feauter.map( items => (
-        <section className='mb-10' key={items.id}>
-          <div className='container md:mx-auto'>
-            <h2 className='text-4xl font-bold pb-3 tracking-tight text-gray-900'>
-              {items.titleSe}
-            </h2>
-            <hr/>
-          </div>
-          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8'>
-            {items.featuredArticles.map(featuredArticles => (
-                <PostCard key={featuredArticles.originalId} node={featuredArticles}/>
-              ))
-            }
-          </div>
-        </section>))}
-        <section className='mb-10'>
-          <div className='container mx-auto'>
-            <h2 className='text-4xl font-bold tracking-tight text-gray-900 pb-3'>
+      <Container>
+        <Header title={data.datoCmsHomepage.title}/>
+        <Filters allFilter={data.allDatoCmsFilter.nodes}/>
+        {feauter.map( items => (
+          <Section key={items.id}>
+            <Container>
+              <h2 className='sub-title'>
+                {items.titleSe}
+              </h2>
+              <hr/>
+            </Container>
+            <div className='grid-post lg:grid-cols-2'>
+              {items.featuredArticles.map(featuredArticles => (
+                  <PostCard key={featuredArticles.originalId} node={featuredArticles}/>
+                ))
+              }
+            </div>
+          </Section>
+          )
+          )}
+        <Section>
+          <Container>
+            <h2 className='sub-title'>
               ALL post
             </h2>
             <hr/>
-          </div>
-          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-4'>
+          </Container>
+          <div className='grid-post lg:grid-cols-4'>
           {posts.map(({ node }) => {
             return (
               <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={node.slug}>
               <div className="">
                 <div className="md:shrink-0 relative">
-                  <img className="h-48 w-full object-cover md:h-40 md:w-full" src={node.articlePicture.url} alt="Man looking at item at a store"/>
-                  <div className="absolute bottom-2 left-5 tracking-wide text-sm text-white font-semibold">Date: {node.meta.publishedAt}</div>
+                  <img className="h-48 w-full object-cover md:h-40 md:w-full" src={node.articlePicture.url}/>
+                  <div className="data">Date: {node.meta.publishedAt}</div>
                 </div>
                 <div className="p-6">
                   <div className="group-button mb-3">
                     Tags:
                     { node.tag.map((tags, id) =>{
                       return (
-                        <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className={style.tags}>{tags.title}</Link>
+                        <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className='tags'>{tags.title}</Link>
                         )
                       })
                     }  
                   </div>
-                  <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{node.articleTitle}</div>
+                  <div className="article-title">{node.articleTitle}</div>
                   <p className="mt-2 text-slate-500">{node.articleShortText}</p>
                   <div className="flex justify-between">
-                    <Link to={`/blog/${node.slug}`} className={style.link}>Read more</Link>
+                    <Link to={`/blog/${node.slug}`} className='links'>Read more</Link>
                   </div>
                   
                 </div>
@@ -88,9 +89,9 @@ const GenericPage = ({ data, pageContext }) => {
             )
           })}
           </div>
-        </section>
-        <section className='mb-10'>
-          <div className='md:container md:mx-auto'>
+        </Section>
+        <Section>
+          <Container>
             <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
               <div className="flex-1 flex justify-between sm:hidden">
               <Link to={prevPagePath} className={prevPageClassName}> Previous </Link>
@@ -123,9 +124,9 @@ const GenericPage = ({ data, pageContext }) => {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
+          </Container>
+        </Section>
+      </Container>
     </main>
   )
 }
