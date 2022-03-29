@@ -55,7 +55,9 @@ export const query = graphql `
           publishedAt(formatString: "YYYY.DD.MM")
         }
         articlePicture {
-          url
+          gatsbyImageData(
+            width: 400
+          )
         }
         tag {
           slug

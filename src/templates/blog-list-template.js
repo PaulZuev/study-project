@@ -8,6 +8,7 @@ import ArrowRight from "../images/arrowRight.svg";
 import ArrowLeft from "../images/arrowLeft.svg";
 import Container from "../components/container";
 import Section from "../components/section";
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 const style = {
   prevButton : 'arrow-button rounded-l-md',
@@ -60,11 +61,12 @@ const GenericPage = ({ data, pageContext }) => {
           </Container>
           <div className='grid-post lg:grid-cols-4'>
           {posts.map(({ node }) => {
+              const image = getImage(node.articlePicture)
             return (
               <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={node.slug}>
               <div className="">
                 <div className="md:shrink-0 relative">
-                  <img className="h-48 w-full object-cover md:h-40 md:w-full" src={node.articlePicture.url}/>
+                  <GatsbyImage image={image} alt={node.articleTitle} className="h-48 w-full object-cover md:h-40 md:w-full"/>                 
                   <div className="data">Date: {node.meta.publishedAt}</div>
                 </div>
                 <div className="p-6">
@@ -151,7 +153,9 @@ export const blogListQuery = graphql`
           originalId
           slug
           articlePicture {
-            url
+            gatsbyImageData(
+              width: 400
+            )
           }
           meta {
             publishedAt(formatString: "YYYY.DD.MM")
@@ -181,7 +185,9 @@ export const blogListQuery = graphql`
             publishedAt(formatString: "YYYY.DD.MM")
           }
           articlePicture {
-            url
+            gatsbyImageData(
+              width: 600
+            )
           }
           tag {
             slug

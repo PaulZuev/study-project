@@ -1,10 +1,12 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Container from "../../components/container";
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 
 const blogPage = ({ data }) => {
   const markdownRemark = data.datoCmsArticle.articleTextNode.childMarkdownRemark
+  const image = getImage(data.datoCmsArticle.articlePicture)
   const { html } = markdownRemark
   return(
     <main>
@@ -19,7 +21,7 @@ const blogPage = ({ data }) => {
           </Link>
         <Container className="pb-10 pt-10">
           <div className="flex items-center justify-center mb-2">
-            <img className="h-56 w-fauto object-cover sm:h-72 md:h-96 lg:w-50 lg:h-50" src={data.datoCmsArticle.articlePicture.url}/>
+            <GatsbyImage image={image} alt={data.datoCmsArticle.articleTitle} className="h-56 w-fauto object-cover sm:h-72 md:h-96 lg:w-50 lg:h-50"/>   
           </div>
           <div className="">
             <p dangerouslySetInnerHTML={{ __html: html }} className="mt-3 p-20 text-base text-white"></p>
@@ -38,7 +40,9 @@ export const query = graphql `
       slug
       originalId
       articlePicture {
-        url
+        gatsbyImageData(
+          width: 600
+        )
       }
       articleTextNode {
         childMarkdownRemark {

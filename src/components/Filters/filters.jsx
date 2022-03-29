@@ -13,7 +13,7 @@ const Filters = (props) =>{
             Tags
             <Icon className="-mr-1 ml-2 h-5 w-5"/>
           </button>
-        <div className={`filterBox ${isSortMenuOpen ? '' : 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+        <div className={`filter-box ${isSortMenuOpen ? '' : 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
           <div className="py-1" role="none">
           {allFilter.map((menu) => {
             return(
