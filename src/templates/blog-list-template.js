@@ -9,7 +9,8 @@ import ArrowLeft from "../images/arrowLeft.svg";
 import Container from "../components/container";
 import Section from "../components/section";
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-
+import Slider from "../components/Slider/slider"
+import { SwiperSlide } from 'swiper/react';
 const style = {
   prevButton : 'arrow-button rounded-l-md',
   nextButton : 'arrow-button rounded-r-md',
@@ -59,38 +60,40 @@ const GenericPage = ({ data, pageContext }) => {
             </h2>
             <hr/>
           </Container>
-          <div className='grid-post lg:grid-cols-4'>
-          {posts.map(({ node }) => {
+            <Slider>
+              {posts.map(({ node }) => {
               const image = getImage(node.articlePicture)
-            return (
-              <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" key={node.slug}>
-              <div className="">
-                <div className="md:shrink-0 relative">
-                  <GatsbyImage image={image} alt={node.articleTitle} className="h-48 w-full object-cover md:h-40 md:w-full"/>                 
-                  <div className="data">Date: {node.meta.publishedAt}</div>
-                </div>
-                <div className="p-6">
-                  <div className="group-button mb-3">
-                    Tags:
-                    { node.tag.map((tags, id) =>{
-                      return (
-                        <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className='tags'>{tags.title}</Link>
-                        )
-                      })
-                    }  
-                  </div>
-                  <div className="article-title">{node.articleTitle}</div>
-                  <p className="mt-2 text-slate-500">{node.articleShortText}</p>
-                  <div className="flex justify-between">
-                    <Link to={`/blog/${node.slug}`} className='links'>Read more</Link>
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-            )
-          })}
-          </div>
+                return (
+                  <SwiperSlide>
+                    <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-full sm:max-w-full" key={node.slug}>
+                      <div className="">
+                        <div className="md:shrink-0 relative">
+                          <GatsbyImage image={image} alt={node.articleTitle} className="h-48 w-full object-cover md:h-40 md:w-full"/>                 
+                          <div className="data">Date: {node.meta.publishedAt}</div>
+                        </div>
+                        <div className="p-6">
+                          <div className="group-button mb-3">
+                            Tags:
+                            { node.tag.map((tags, id) =>{
+                              return (
+                                <Link to={`/filter/${tags.slug}`} key={id - tags.originalId} className='tags'>{tags.title}</Link>
+                                )
+                              })
+                            }  
+                          </div>
+                          <div className="article-title">{node.articleTitle}</div>
+                          <p className="mt-2 text-slate-500">{node.articleShortText}</p>
+                          <div className="flex justify-between">
+                            <Link to={`/blog/${node.slug}`} className='links'>Read more</Link>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                )
+              })}
+            </Slider>
         </Section>
         <Section>
           <Container>

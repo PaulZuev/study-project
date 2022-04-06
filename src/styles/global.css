@@ -35,3 +35,12 @@
 .my-img{
   @apply inline-block lg:h-32 lg:w-32 md:w-full rounded-lg ring-2 ring-white transition ease-in-out hover:duration-150;
 }
+.swiper{
+  padding: 40px 30px!important;
+}
+.swiper-button-next{
+  right: 0px!important;
+}
+.swiper-button-prev{
+  left: 0px!important;
+}
