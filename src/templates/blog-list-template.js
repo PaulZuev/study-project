@@ -65,7 +65,7 @@ const GenericPage = ({ data, pageContext }) => {
               const image = getImage(node.articlePicture)
                 return (
                   <SwiperSlide>
-                    <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-full sm:max-w-full" key={node.slug}>
+                    <div className="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-full sm:max-w-full h-full" key={node.slug}>
                       <div className="">
                         <div className="md:shrink-0 relative">
                           <GatsbyImage image={image} alt={node.articleTitle} className="h-48 w-full object-cover md:h-40 md:w-full"/>                 

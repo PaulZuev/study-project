@@ -38,6 +38,9 @@
 .swiper{
   padding: 40px 30px!important;
 }
+.swiper-slide{
+  height: auto!important;
+}
 .swiper-button-next{
   right: 0px!important;
 }
