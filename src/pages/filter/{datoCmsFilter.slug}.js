@@ -1,17 +1,15 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import Header from "../../components/Header/header";
 import Filters from "../../components/Filters/filters";
 import PostCard from "../../components/PostCard/postCard";
-import Container from "../../components/container";
 import Section from "../../components/section";
+import Layout from "../../components/Layout/layout";
 
 const FilterPage = ({ data, pageContext }) => {
   const allArticle = data.allDatoCmsArticle.nodes
   return(
     <Section>
-      <Container>
-        <Header title={data.datoCmsHomepage.title}/>
+      <Layout headTitle={data.datoCmsHomepage.title}>
         <Filters allFilter={data.allDatoCmsFilter.nodes}/>
         <h2 className='sub-title'>
           Post by {pageContext.slug} tags
@@ -23,7 +21,7 @@ const FilterPage = ({ data, pageContext }) => {
             )
           })}
         </div>
-      </Container>
+      </Layout>
     </Section>
   ) 
 }
